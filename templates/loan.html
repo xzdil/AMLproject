@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
+<style>
+    .green-background {
+        background-color: black; /* Задает зеленый цвет фона */
+    }
+</style>
+</head>
+<body style="background-image: url('https://img.kapital.kz/VtWeQYlxmns/bG9jYWw6Ly8vbGVnYWN5L2ltYWdlcy8xL2EvOC9jLzcvOGJjYTViZmIzMzYwZjFkNTM1ZmI1MmMxZTdhLmpwZw')">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Bank</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Get loan</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">My loans</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled"
+            >Free money</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="vh-100" >
+  <div class="container py-5 h-100">
+<section>
+
+  <div class="modal" id="loadingModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Загрузка...</span>
+                </div>
+                <p>Please wait, the application is being processed...</p>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal" id="resultModal" style="display: none;" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div id="green" class="modal-content green-background">
+            <div class="modal-body text-center">
+                <p id="predict"></p>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 mb-4">
+      <div class="card mb-4">
+        <div class="card-header py-3">
+          <h5 class="mb-0">Enter your info</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row mb-4">
+              <label for="job">Your job</label>
+              <div class="col">
+                <div class="form-group">
+                  <select onchange="get_job()" class="form-control" name="job" id="job">
+                    <option>entrepreneur</option>
+                    <option>management</option>
+                    <option>technician</option>
+                    <option>blue-collar</option>
+                    <option>admin</option>
+                    <option>services</option>
+                    <option>housemaid</option>
+                    <option>self-employed</option>
+                    <option>unemployed</option>
+                    <option>student</option>
+                    <option>retired</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-outline">
+                  <input type="number" name="age" id="age" class="form-control" required/>
+                  <label class="form-label" for="form6Example3">Age</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-outline">
+                    <input type="number" name="balance" id="balance" class="form-control" />
+                    <label class="form-label" for="balance">Balance</label>
+                </div>
+              </div>
+            </div>
+
+              <hr class="my-4" />
+            <div class="row mb-4">
+              <label for="job">Education</label>
+              <div class="col">
+                 <div class="form-group">
+                  <select class="form-control" name="education" id="education">
+                    <option>tertiary</option>
+                    <option>secondary</option>
+                    <option>primary</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-outline">
+                  <input type="number" name="campaign" id="campaign" class="form-control" />
+                  <label class="form-label" for="campaign">How many loans did you have?</label>
+                </div>
+              </div>
+            </div>
+
+             <hr class="my-4" />
+
+            <div class="row mb-4">
+              <div class="col">
+               <h5 class="mb-4">How can we contact you?</h5>
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="contact" id="checkoutForm1" value="cellular"
+                checked />
+              <label class="form-check-label" for="checkoutForm1">
+                cellular
+              </label>
+            </div>
+
+            <div class="form-check mb-4">
+              <input class="form-check-input" type="radio" name="contact" id="checkoutForm2" value="telephone" />
+              <label class="form-check-label" for="checkoutForm2">
+                telephone
+              </label>
+            </div>
+              </div>
+              <div class="col">
+                <h5 class="mb-4">Have you had any overdue loans?</h5>
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="overdue" id="checkoutForm1" value="yes"
+                checked />
+              <label class="form-check-label" for="checkoutForm1">
+                Yes
+              </label>
+            </div>
+
+            <div class="form-check mb-4">
+              <input class="form-check-input" type="radio" name="overdue" id="checkoutForm2" value="no"/>
+              <label class="form-check-label" for="checkoutForm2">
+                No
+              </label>
+            </div>
+              </div>
+              <div class="col">
+                <h5 class="mb-4">Marital</h5>
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Marital" id="checkoutForm1" value="divorced"
+                checked />
+              <label class="form-check-label" for="checkoutForm1">
+                divorced
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Marital" id="checkoutForm1" value="single"
+                checked />
+              <label class="form-check-label" for="checkoutForm1">
+                single
+              </label>
+            </div>
+
+            <div class="form-check mb-4">
+              <input class="form-check-input" type="radio" name="overdue" id="checkoutForm2" value="married"/>
+              <label class="form-check-label" for="checkoutForm2">
+                married
+              </label>
+            </div>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <div class="row mb-4">
+              <div class="col">
+                <h5 class="mb-4">Do you have a house right now?</h5>
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="house" id="checkoutForm1" value="yes"
+                checked />
+              <label class="form-check-label" for="checkoutForm1">
+                Yes
+              </label>
+            </div>
+
+            <div class="form-check mb-4">
+              <input class="form-check-input" type="radio" name="house" id="checkoutForm2" value="no"/>
+              <label class="form-check-label" for="checkoutForm2">
+                No
+              </label>
+            </div>
+              </div>
+              <div class="col">
+                <h5 class="mb-4">Do you have a loan right now?</h5>
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="loan" id="checkoutForm3" value="yes"
+                checked />
+              <label class="form-check-label" for="checkoutForm3">
+                Yes
+              </label>
+            </div>
+
+            <div class="form-check mb-4">
+              <input class="form-check-input" type="radio" name="loan" id="checkoutForm5" value="no"/>
+              <label class="form-check-label" for="checkoutForm5">
+                No
+              </label>
+            </div>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card mb-4">
+        <div class="card-header py-3">
+          <h5 class="mb-0">Loan</h5>
+        </div>
+        <div class="card-body">
+          <label style="margin-bottom: 5%">Months</label>
+          <div class="form-outline mb-4">
+
+           <div class="btn-group">
+              <input type="radio" class="btn-check " name="duration" id="option1" autocomplete="off" value="180" />
+              <label class="btn btn-secondary" for="option1">6</label>
+
+              <input type="radio" class="btn-check" name="duration" id="option2" autocomplete="off" value="365" checked />
+              <label class="btn btn-secondary" for="option2">12</label>
+
+              <input type="radio" class="btn-check" name="duration" id="option3" autocomplete="off" value="440" />
+              <label class="btn btn-secondary" for="option3">18 </label>
+
+              <input type="radio" class="btn-check" name="duration" id="option4" autocomplete="off" value="730" />
+              <label class="btn btn-secondary" for="option4">24 </label>
+           </div>
+        </div>
+          <div class="form-outline">
+                  <input onchange="" type="number" name="campaign" id="money" class="form-control" />
+                  <label class="form-label" for="campaign">Amount of money</label>
+          </div>
+          <br>
+           <div class="container">
+          </div>
+             <button id="submitButton" class="btn btn-primary btn-lg btn-block" type="button">
+              Get a loan
+            </button>
+      </div>
+    </div>
+  </div>
+</section>
+  </div>
+</section>
+<div style="display: none" id="month">{{month}}</div>
+<div style="display: none" id="day">{{day}}</div>
+<script>
+    // Получаем элементы HTML
+  var submitButton = document.getElementById("submitButton");
+
+  submitButton.addEventListener("click",async () => {
+    const url = 'get_score?';
+    const data = {
+      age: parseInt(document.getElementById("age").value),
+      job: document.getElementById("job").options[document.getElementById("job").selectedIndex].text,
+      marital: document.querySelector('input[name="Marital"]:checked').value,
+      education: document.getElementById("education").options[document.getElementById("education").selectedIndex].text,
+      default: document.querySelector('input[name="overdue"]:checked').value,
+      balance: document.getElementById("balance").value,
+      housing: document.querySelector('input[name="house"]:checked').value,
+      loan: document.querySelector('input[name="loan"]:checked').value,
+      contact: document.querySelector('input[name="contact"]:checked').value,
+      day: parseInt(document.getElementById("day").innerText),
+      month: document.getElementById("month").innerText,
+      duration: parseInt(document.querySelector('input[name="duration"]:checked').value),
+      campaign: parseInt(document.getElementById("campaign").value),
+      pdays: -1,
+      previous: 0,
+    };
+    console.log(JSON.stringify(data))
+   const options = {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+};
+
+fetch(url, options)
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
+})
+.then(data => {const resultDiv = document.getElementById('result');
+                let resultModal = document.getElementById('green');
+                console.log(data)
+                if(data[0] === 1){
+                  resultModal.style.backgroundColor = 'springgreen';
+                  document.getElementById("predict").innerText = "Your loan has been approved!"
+
+                } else {
+                  resultModal.style.backgroundColor = 'indianred';
+                  document.getElementById("predict").innerText = "Your loan has not been approved"
+                }
+})
+  })
+
+
+let amountInput = document.getElementById("money");
+let resultDiv = document.getElementById("result");
+
+function calculateMonthlyPayment() {
+    let amount = parseFloat(amountInput.value);
+    let durationRadio = document.querySelector('input[name="duration"]:checked');
+
+    if (durationRadio) {
+        var duration = parseFloat(durationRadio.value);
+        if (!isNaN(amount) && !isNaN(duration) && duration > 0) {
+            var monthlyPayment = amount / (duration/30);
+            resultDiv.textContent = "Monthly payment: $" + monthlyPayment.toFixed(2);
+        } else {
+            resultDiv.textContent = "Please enter the amount and select the term.";
+        }
+    } else {
+        resultDiv.textContent = "Please, select the term.";
+    }
+}
+
+amountInput.addEventListener("input", calculateMonthlyPayment);
+
+let durationRadios = document.querySelectorAll('input[name="duration"]');
+durationRadios.forEach(function(radioButton) {
+    radioButton.addEventListener("change", calculateMonthlyPayment);
+});
+
+  document.addEventListener("DOMContentLoaded", function () {
+        console.log("modal")
+        var loadingModal = document.getElementById("loadingModal");
+
+        if (submitButton && loadingModal) {
+            submitButton.addEventListener("click", function () {
+                loadingModal.classList.add("show");
+                loadingModal.style.display = "block";
+
+                setTimeout(function () {
+                    document.getElementById('loadingModal').style.display = 'none';
+
+                    document.getElementById('resultModal').style.display = 'block';
+                }, 5000);
+            });
+        }
+    });
+</script>
+</body>
+</html>
