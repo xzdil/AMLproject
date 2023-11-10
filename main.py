@@ -4,7 +4,10 @@ from fastapi.templating import Jinja2Templates
 import uvicorn
 from starlette.staticfiles import StaticFiles
 from datetime import datetime
+
 from model import log_predict
+from svm import svm_predict
+from kmeans import MiniBatchKMeans_predict
 
 
 app = FastAPI()
@@ -55,7 +58,6 @@ async def root(item: Item):
 
     prediction_list = prediction.tolist()
     print(prediction_list)
-    # Верните список словарей в формате JSON
     return prediction_list
 
 
