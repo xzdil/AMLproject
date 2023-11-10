@@ -31,5 +31,3 @@ def svm_predict(age, job, marital, education, default, balance, housing, loan, c
     return svm_model.predict(data)
 
 
-print(log_predict(1, "student", "single", "secondary", "yes", 100, "no", "no", "cellular", 1, "oct", 365, 0, -1, 0))
-

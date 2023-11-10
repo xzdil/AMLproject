@@ -9,7 +9,6 @@ from model import log_predict
 from svm import svm_predict
 from kmeans import MiniBatchKMeans_predict
 
-
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 port = 10000
@@ -55,6 +54,29 @@ async def root(item: Item):
     prediction = log_predict(item.age, item.job, item.marital, item.education, item.default, item.balance, item.housing,
                              item.loan,
                              item.contact, item.day, item.month, item.duration, item.campaign)
+
+    prediction_list = prediction.tolist()
+    print(prediction_list)
+    return prediction_list
+
+
+@app.post("/svm")
+async def root(item: Item):
+    prediction = svm_predict(item.age, item.job, item.marital, item.education, item.default, item.balance, item.housing,
+                             item.loan,
+                             item.contact, item.day, item.month, item.duration, item.campaign)
+
+    prediction_list = prediction.tolist()
+    print(prediction_list)
+    return prediction_list
+
+
+@app.post("/kmeans")
+async def root(item: Item):
+    prediction = MiniBatchKMeans_predict(item.age, item.job, item.marital, item.education, item.default, item.balance,
+                                         item.housing,
+                                         item.loan,
+                                         item.contact, item.day, item.month, item.duration, item.campaign)
 
     prediction_list = prediction.tolist()
     print(prediction_list)

@@ -28,8 +28,4 @@ def MiniBatchKMeans_predict(age, job, marital, education, default, balance, hous
     })
     print(data)
     print("Ended predicting")
-    return MiniBatchKMeans.predict(data)
-
-
-print(log_predict(1, "student", "single", "secondary", "yes", 100, "no", "no", "cellular", 1, "oct", 365, 0, -1, 0))
-
+    return MiniBatchKMeans_model.predict(data)

@@ -280,6 +280,16 @@
                   <input onchange="" type="number" name="campaign" id="money" class="form-control" />
                   <label class="form-label" for="campaign">Amount of money</label>
           </div>
+          <div class="btn-group">
+              <input type="radio" class="btn-check " name="model" id="svm" autocomplete="off" value="svm?" />
+              <label class="btn btn-secondary" for="svm">SVM</label>
+
+              <input type="radio" class="btn-check" name="model" id="kmeans" autocomplete="off" value="kmeans?" checked />
+              <label class="btn btn-secondary" for="kmeans">Kmeans</label>
+
+              <input type="radio" class="btn-check" name="model" id="log" autocomplete="off" value="get_score?" />
+              <label class="btn btn-secondary" for="log">Logistic</label>
+           </div>
           <br>
            <div class="container">
           </div>
@@ -299,7 +309,15 @@
   var submitButton = document.getElementById("submitButton");
 
   submitButton.addEventListener("click",async () => {
-    const url = 'get_score?';
+    const radioButtons = document.getElementsByName('model');
+    let selectedValue;
+    for (let i = 0; i < radioButtons.length; i++) {
+    if (radioButtons[i].checked) {
+        selectedValue = radioButtons[i].value;
+        break;
+      }
+    }
+    let url = selectedValue
     const data = {
       age: parseInt(document.getElementById("age").value),
       job: document.getElementById("job").options[document.getElementById("job").selectedIndex].text,
